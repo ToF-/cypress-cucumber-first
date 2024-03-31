@@ -11,7 +11,20 @@ When('I click {int} times on the {int} button', (times, number) => {
     }
 });
 
-Then('I see a score of {int}', (score) => {
-    cy.get('#FrameStart0texthdcpscore').contains(score);
+When('I click on the buttons', (table) => {
+    let row = table.raw()[0]
+    for(let i = 0; i < row.length; i++) {
+        let number = row[i];
+        cy.get(`#btn${number}`).click();
+    }
+});
+
+When('I click for another game', () => {
+    cy.get('#btn033').click();
+});
+
+Then('I see a score of {int} for game {int}', (score,number) => {
+    let id = `#FrameStart${number}texthdcpscore`;
+    cy.get(id).contains(score);
 
 });
